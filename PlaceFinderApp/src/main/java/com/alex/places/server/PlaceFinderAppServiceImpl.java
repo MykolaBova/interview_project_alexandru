@@ -1,8 +1,9 @@
 package com.alex.places.server;
 
-import com.alex.places.client.PlaceFinderService;
+import com.alex.places.client.PlaceFinderAppService;
 import com.alex.places.shared.dto.PlaceDTO;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import com.google.inject.Singleton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,8 +12,9 @@ import java.util.List;
  * The server-side implementation of the RPC service.
  */
 @SuppressWarnings("serial")
-public class PlaceFinderServiceImpl extends RemoteServiceServlet implements
-    PlaceFinderService {
+@Singleton
+public class PlaceFinderAppServiceImpl extends RemoteServiceServlet implements
+    PlaceFinderAppService {
 
   public List<PlaceDTO> getPlaces(String city) {
     // Escape data from the client to avoid cross-site script vulnerabilities.

@@ -7,6 +7,6 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import java.util.List;
 
 @RemoteServiceRelativePath("find")
-public interface PlaceFinderService extends RemoteService {
+public interface PlaceFinderAppService extends RemoteService {
   List<PlaceDTO> getPlaces(String city);
 }

@@ -13,10 +13,10 @@ import com.google.gwt.user.client.ui.*;
 
 import java.util.List;
 
-public class PlaceFinder implements EntryPoint {
+public class PlaceFinderApp implements EntryPoint {
   private static final String SERVER_ERROR = "An error occurred while trying to get the places.";
 
-  private final PlaceFinderServiceAsync placeFinderService = GWT.create(PlaceFinderService.class);
+  private final PlaceFinderAppServiceAsync placeFinderService = GWT.create(PlaceFinderAppService.class);
 
   public void onModuleLoad() {
     final VerticalPanel mainPanel = new VerticalPanel();
