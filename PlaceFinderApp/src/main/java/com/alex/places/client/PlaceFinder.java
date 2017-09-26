@@ -1,5 +1,6 @@
 package com.alex.places.client;
 
+import com.alex.places.shared.dto.PlaceDTO;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -10,6 +11,8 @@ import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 
+import java.util.List;
+
 public class PlaceFinder implements EntryPoint {
   private static final String SERVER_ERROR = "An error occurred while trying to get the places.";
 
@@ -19,13 +22,21 @@ public class PlaceFinder implements EntryPoint {
     final VerticalPanel mainPanel = new VerticalPanel();
     final Button findPlacesButton = new Button("Find places");
     final ListBox citySelector = new ListBox();
+    final FlexTable placesTable = new FlexTable();
+    final Label errorLabel = new Label();
+
     citySelector.addItem("New York");
     citySelector.addItem("Paris");
     citySelector.addItem("London");
     citySelector.addItem("Sidney");
-    final Label errorLabel = new Label();
 
     findPlacesButton.addStyleName("findPlacesButton");
+
+    placesTable.setText(0, 0, "#");
+    placesTable.setText(0, 1, "Name");
+    placesTable.setText(0, 2, "Rating");
+
+    mainPanel.add(placesTable);
 
     RootPanel.get("places").add(mainPanel);
     RootPanel.get("citySelectorContainer").add(citySelector);
@@ -33,6 +44,7 @@ public class PlaceFinder implements EntryPoint {
     RootPanel.get("errorLabelContainer").add(errorLabel);
 
     citySelector.setFocus(true);
+    placesTable.setVisible(false);
 
     final DialogBox dialogBox = new DialogBox();
     dialogBox.setAnimationEnabled(true);
@@ -69,21 +81,26 @@ public class PlaceFinder implements EntryPoint {
 
         findPlacesButton.setEnabled(false);
         serverResponseLabel.setText("");
-        placeFinderService.getPlaces(city, new AsyncCallback<String>() {
+        placeFinderService.getPlaces(city, new AsyncCallback<List<PlaceDTO>>() {
           public void onFailure(Throwable caught) {
             dialogBox.setText("Error");
             serverResponseLabel.addStyleName("serverResponseLabelError");
             serverResponseLabel.setHTML(SERVER_ERROR);
             dialogBox.center();
             closeButton.setFocus(true);
+            findPlacesButton.setEnabled(true);
           }
 
-          public void onSuccess(String response) {
-            dialogBox.setText("Success");
-            serverResponseLabel.removeStyleName("serverResponseLabelError");
-            serverResponseLabel.setHTML(response);
-            dialogBox.center();
-            closeButton.setFocus(true);
+          public void onSuccess(List<PlaceDTO> places) {
+            placesTable.setVisible(!places.isEmpty());
+            int pos = 1;
+            for (PlaceDTO place : places) {
+              placesTable.setText(pos, 0, Integer.toString(pos));
+              placesTable.setText(pos, 1, place.getName());
+              placesTable.setText(pos, 2, place.getRating());
+              pos++;
+            }
+            findPlacesButton.setEnabled(true);
           }
         });
       }
