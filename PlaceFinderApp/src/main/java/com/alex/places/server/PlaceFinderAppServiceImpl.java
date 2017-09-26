@@ -1,8 +1,10 @@
 package com.alex.places.server;
 
 import com.alex.places.client.PlaceFinderAppService;
+import com.alex.places.server.service.PlaceService;
 import com.alex.places.shared.dto.PlaceDTO;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 import java.util.ArrayList;
@@ -16,13 +18,13 @@ import java.util.List;
 public class PlaceFinderAppServiceImpl extends RemoteServiceServlet implements
     PlaceFinderAppService {
 
+  @Inject
+  private PlaceService placeService;
+
   public List<PlaceDTO> getPlaces(String city) {
     // Escape data from the client to avoid cross-site script vulnerabilities.
     city = escapeHtml(city);
-    List<PlaceDTO> places = new ArrayList<>();
-    places.add(new PlaceDTO("First place " + city, "3.5"));
-    places.add(new PlaceDTO("Second place " + city, "2.8"));
-    return places;
+    return placeService.findByCity(city);
   }
 
   /**
