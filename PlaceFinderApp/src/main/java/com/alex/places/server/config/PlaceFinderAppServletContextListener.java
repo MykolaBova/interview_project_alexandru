@@ -12,6 +12,8 @@ import com.google.inject.Injector;
 import com.google.inject.Provides;
 import com.google.inject.name.Named;
 import com.google.inject.name.Names;
+import com.google.inject.persist.PersistFilter;
+import com.google.inject.persist.jpa.JpaPersistModule;
 import com.google.inject.servlet.GuiceServletContextListener;
 import com.google.inject.servlet.ServletModule;
 import com.google.maps.GeoApiContext;
@@ -31,8 +33,13 @@ public class PlaceFinderAppServletContextListener extends GuiceServletContextLis
 
       @Override
       protected void configureServlets() {
+        install(new JpaPersistModule("placeFinderPersistence"));
+        filter("/*").through(PersistFilter.class);
+
         serve("/placefinder/find").with(PlaceFinderAppServiceImpl.class);
+
         bindProperties();
+
         bind(PlaceService.class).to(PlaceServiceImpl.class);
         bind(GooglePlacesService.class).to(GooglePlacesServiceImpl.class);
       }

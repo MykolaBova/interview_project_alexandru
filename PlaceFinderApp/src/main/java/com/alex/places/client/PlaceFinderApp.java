@@ -97,7 +97,7 @@ public class PlaceFinderApp implements EntryPoint {
             for (PlaceDTO place : places) {
               placesTable.setText(pos, 0, Integer.toString(pos));
               placesTable.setText(pos, 1, place.getName());
-              placesTable.setText(pos, 2, place.getRating());
+              placesTable.setText(pos, 2, Float.toString(place.getRating()));
               pos++;
             }
             findPlacesButton.setEnabled(true);
