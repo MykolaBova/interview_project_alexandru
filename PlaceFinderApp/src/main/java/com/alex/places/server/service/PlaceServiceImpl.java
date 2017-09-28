@@ -29,9 +29,14 @@ public class PlaceServiceImpl implements PlaceService {
       for (PlacesSearchResult result : response.results) {
         String googlePlaceId = result.placeId;
         Place place = placeDAO.findByGooglePlaceId(googlePlaceId);
-        if (place == null || !place.isModifiedByUser()) {
+        if (place == null) {
           place = PlaceConverter.fromGooglePlace(result);
           placeDAO.save(place);
+        } else if (!place.isModifiedByUser()) {
+          long id = place.getId();
+          place = PlaceConverter.fromGooglePlace(result);
+          place.setId(id);
+          placeDAO.update(place);
         }
         places.add(PlaceConverter.toDTO(place));
       }

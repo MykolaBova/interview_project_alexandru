@@ -11,6 +11,8 @@ import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
+import com.google.gwt.view.client.AsyncDataProvider;
+import com.google.gwt.view.client.HasData;
 
 import java.util.List;
 
@@ -33,7 +35,6 @@ public class PlaceFinderApp implements EntryPoint {
 
     findPlacesButton.addStyleName("findPlacesButton");
 
-    placesTable.setHeader("Name", "Rating");
     mainPanel.add(placesTable);
 
     RootPanel.get("places").add(mainPanel);
@@ -91,9 +92,7 @@ public class PlaceFinderApp implements EntryPoint {
 
           public void onSuccess(List<PlaceDTO> places) {
             placesTable.setVisible(!places.isEmpty());
-            for (PlaceDTO place : places) {
-              placesTable.addRow(place.getName(), place.getRating());
-            }
+            placesTable.updateTableData(places);
             findPlacesButton.setEnabled(true);
           }
         });
