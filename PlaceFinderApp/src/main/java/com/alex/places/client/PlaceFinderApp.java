@@ -1,5 +1,6 @@
 package com.alex.places.client;
 
+import com.alex.places.client.components.ResultsTable;
 import com.alex.places.shared.dto.PlaceDTO;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -22,7 +23,7 @@ public class PlaceFinderApp implements EntryPoint {
     final VerticalPanel mainPanel = new VerticalPanel();
     final Button findPlacesButton = new Button("Find places");
     final ListBox citySelector = new ListBox();
-    final FlexTable placesTable = new FlexTable();
+    final ResultsTable placesTable = new ResultsTable();
     final Label errorLabel = new Label();
 
     citySelector.addItem("New York");
@@ -32,10 +33,7 @@ public class PlaceFinderApp implements EntryPoint {
 
     findPlacesButton.addStyleName("findPlacesButton");
 
-    placesTable.setText(0, 0, "#");
-    placesTable.setText(0, 1, "Name");
-    placesTable.setText(0, 2, "Rating");
-
+    placesTable.setHeader("Name", "Rating");
     mainPanel.add(placesTable);
 
     RootPanel.get("places").add(mainPanel);
@@ -93,12 +91,8 @@ public class PlaceFinderApp implements EntryPoint {
 
           public void onSuccess(List<PlaceDTO> places) {
             placesTable.setVisible(!places.isEmpty());
-            int pos = 1;
             for (PlaceDTO place : places) {
-              placesTable.setText(pos, 0, Integer.toString(pos));
-              placesTable.setText(pos, 1, place.getName());
-              placesTable.setText(pos, 2, Float.toString(place.getRating()));
-              pos++;
+              placesTable.addRow(place.getName(), Float.toString(place.getRating()));
             }
             findPlacesButton.setEnabled(true);
           }
