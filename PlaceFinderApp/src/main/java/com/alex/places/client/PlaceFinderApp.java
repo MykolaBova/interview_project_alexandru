@@ -92,7 +92,7 @@ public class PlaceFinderApp implements EntryPoint {
           public void onSuccess(List<PlaceDTO> places) {
             placesTable.setVisible(!places.isEmpty());
             for (PlaceDTO place : places) {
-              placesTable.addRow(place.getName(), Float.toString(place.getRating()));
+              placesTable.addRow(place.getName(), place.getRating());
             }
             findPlacesButton.setEnabled(true);
           }

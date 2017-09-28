@@ -16,7 +16,7 @@ public class PlaceConverter {
   public static PlaceDTO toDTO(Place place) {
     PlaceDTO placeDTO = new PlaceDTO();
     placeDTO.setName(place.getName());
-    placeDTO.setRating(place.getRating());
+    placeDTO.setRating(String.format ("%,.2f", place.getRating()));
     return placeDTO;
   }
 }

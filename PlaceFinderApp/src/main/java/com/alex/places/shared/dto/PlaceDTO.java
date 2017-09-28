@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class PlaceDTO implements Serializable {
   private String name;
-  private float rating;
+  private String rating;
 
   public String getName() {
     return name;
@@ -14,11 +14,11 @@ public class PlaceDTO implements Serializable {
     this.name = name;
   }
 
-  public float getRating() {
+  public String getRating() {
     return rating;
   }
 
-  public void setRating(float rating) {
+  public void setRating(String rating) {
     this.rating = rating;
   }
 }
