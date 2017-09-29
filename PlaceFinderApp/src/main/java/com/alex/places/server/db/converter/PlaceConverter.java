@@ -17,6 +17,7 @@ public class PlaceConverter {
     PlaceDTO placeDTO = new PlaceDTO();
     placeDTO.setName(place.getName());
     placeDTO.setRating(String.format ("%,.2f", place.getRating()));
+    placeDTO.setGooglePlaceId(place.getGooglePlaceId());
     return placeDTO;
   }
 }

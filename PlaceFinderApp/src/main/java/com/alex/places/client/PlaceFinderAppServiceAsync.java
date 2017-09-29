@@ -10,4 +10,5 @@ import java.util.List;
  */
 public interface PlaceFinderAppServiceAsync {
   void getPlaces(String input, AsyncCallback<List<PlaceDTO>> callback);
+  void savePlace(PlaceDTO placeDTO, AsyncCallback<PlaceDTO> callback);
 }

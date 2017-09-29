@@ -43,4 +43,13 @@ public class PlaceServiceImpl implements PlaceService {
     }
     return places;
   }
+
+  @Override
+  public void savePlace(PlaceDTO placeDTO) {
+    Place place = placeDAO.findByGooglePlaceId(placeDTO.getGooglePlaceId());
+    place.setName(placeDTO.getName());
+    place.setRating(Float.parseFloat(placeDTO.getRating()));
+    place.setModifiedByUser(true);
+    placeDAO.update(place);
+  }
 }

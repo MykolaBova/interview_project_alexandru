@@ -9,4 +9,5 @@ import java.util.List;
 @RemoteServiceRelativePath("find")
 public interface PlaceFinderAppService extends RemoteService {
   List<PlaceDTO> getPlaces(String city);
+  void savePlace(PlaceDTO placeDTO);
 }

@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface PlaceService {
   List<PlaceDTO> findByCity(String city);
+  void savePlace(PlaceDTO placeDTO);
 }

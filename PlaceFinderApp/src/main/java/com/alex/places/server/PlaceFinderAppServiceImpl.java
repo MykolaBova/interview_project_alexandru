@@ -27,6 +27,11 @@ public class PlaceFinderAppServiceImpl extends RemoteServiceServlet implements
     return placeService.findByCity(city);
   }
 
+  @Override
+  public void savePlace(PlaceDTO placeDTO) {
+    placeService.savePlace(placeDTO);
+  }
+
   /**
    * Escape an html string. Escaping data received from the client helps to
    * prevent cross-site script vulnerabilities.
